@@ -10,6 +10,19 @@
 
         <ul class="nav navbar-nav navbar-right">
 
+            <li>
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Categories</a>
+                <ul class="dropdown-menu">
+                    <% for (var i = 0; i < categories.length; i++) { %>
+                        <li>
+                            <a>
+                                <%= categories[i].name %>
+                            </a>
+                        </li>
+                        <% } %>
+                </ul>
+            </li> 
+
             <% if (!user) { %>
 
                 <li>
