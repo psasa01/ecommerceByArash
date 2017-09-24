@@ -22,6 +22,7 @@ router.get('/:name', function (req, res, next) {
                 product.name = faker.commerce.productName();
                 product.price = faker.commerce.price();
                 product.image = faker.image.image();
+                product.description = faker.lorem.paragraph();
                 product.save();
             }
             }
