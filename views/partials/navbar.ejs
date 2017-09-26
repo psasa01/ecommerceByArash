@@ -55,6 +55,12 @@
 
                     <% } %>
 
+                        <% if(user) { %>
+                            <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;<span class="badge"><%= cart %></span></a></li>
+                            <% } else { %>
+                                <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="badge">0</span></a></li>
+                                <% } %>
+
         </ul>
 
         <!--/.navbar-collapse -->

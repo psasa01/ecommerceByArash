@@ -80,7 +80,7 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('page/:page', function (req, res, next) {
+router.get('/page/:page', function (req, res, next) {
     paginate(req, res, next);
 });
 
