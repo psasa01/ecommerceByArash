@@ -1,5 +1,7 @@
 $(function () {
 
+    Stripe.setPublishableKey('pk_test_ClEWx2obV07vOAVtt7AUpGH0');
+
     /* ---------------------- SEARCH ---------------- */
 
     $('#search').keyup(function () {
@@ -84,7 +86,7 @@ $(function () {
 
             // Show the errors on the form:
             $form.find('.payment-errors').text(response.error.message);
-            $form.find('.submit').prop('disabled', false); // Re-enable submission
+            $form.find('button').prop('disabled', false); // Re-enable submission
 
         } else { // Token was created!
 
@@ -102,7 +104,7 @@ $(function () {
     var $form = $('#payment-form');
     $form.submit(function (event) {
         // Disable the submit button to prevent repeated clicks:
-        $form.find('.submit').prop('disabled', true);
+        $form.find('button').prop('disabled', true);
 
         // Request a token from Stripe:
         Stripe.card.createToken($form, stripeResponseHandler);
