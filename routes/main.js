@@ -6,7 +6,6 @@ var Cart = require('../models/cart');
 function paginate(req, res, next) {
     var perPage = 9;
     var page = req.params.page;
-
     Product
         .find()
         .skip(perPage * page)
@@ -22,7 +21,6 @@ function paginate(req, res, next) {
                 });
             });
         });
-
 };
 
 Product.createMapping(function (err, mapping) {
@@ -50,6 +48,23 @@ stream.on('error', function (err) {
     console.log(err);
 });
 
+router.post('/product/:product_id', function (req, res, err) {
+    Cart.findOne({
+        owner: req.user._id
+    }, function (err, cart) {
+        cart.items.push({
+            item: req.body.product_id,
+            price: parseFloat(req.body.priceValue),
+            quantity: parseInt(req.body.quantity)
+        });
+        cart.total = (cart.total + parseFloat(req.body.priceValue)).toFixed(2);
+        cart.save(function (err) {
+            if (err) return next(err);
+            return res.redirect('/cart');
+        });
+    });
+});
+
 router.get('/cart', function (req, res, next) {
     Cart
         .findOne({
@@ -59,26 +74,22 @@ router.get('/cart', function (req, res, next) {
         .exec(function (err, foundCart) {
             if (err) return next(err);
             res.render('main/cart', {
-                foundCart: foundCart
+                foundCart: foundCart,
+                message: req.flash('remove')
             });
         });
 });
 
-router.post('/product/product_id', function (req, res, err) {
+router.post('/remove', function (req, res, next) {
     Cart.findOne({
         owner: req.user._id
-    }, function (err, cart) {
-        cart.items.push({
-            item: req.body.product_id,
-            price: parseFloat(req.body.priceValue),
-            quantity: parseInt(req.body.quantity)
-        });
-
-        cart.total = (cart.total + parseFloat(req.body.priceValue)).toFixed(2);
-
-        cart.save(function (err) {
+    }, function (err, foundCart) {
+        foundCart.items.pull(String(req.body.item));
+        foundCart.total = (foundCart.total - parseFloat(req.body.price)).toFixed(2);
+        foundCart.save(function (err, found) {
             if (err) return next(err);
-            return res.redirect('/cart');
+            req.flash('remove', 'Successfully removed');
+            res.redirect('/cart');
         });
     });
 });
@@ -146,5 +157,9 @@ router.get('/product/:id', function (req, res, next) {
         });
     });
 });
+
+
+
+
 
 module.exports = router;

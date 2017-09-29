@@ -56,7 +56,7 @@
                     <% } %>
 
                         <% if(user) { %>
-                            <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;<span class="badge"><%= cart %></span></a></li>
+                            <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;<span class="badge"><%= cart %></span>&nbsp;$<%= foundCart.total %></a></li>
                             <% } else { %>
                                 <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;<span class="badge">0</span></a></li>
                                 <% } %>
