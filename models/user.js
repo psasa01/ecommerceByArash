@@ -13,6 +13,9 @@ var UserSchema = new Schema({
     },
     password: String,
 
+    facebook: String,
+    tokens: Array,
+
     profile: {
         name: {
             type: String,
@@ -30,6 +33,10 @@ var UserSchema = new Schema({
         paid: {
             type: Number,
             default: 0
+        },
+        item: {
+            type: Schema.Types.ObjectId,
+            ref: 'Product'
         }
     }]
 });
